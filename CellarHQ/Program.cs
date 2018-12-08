@@ -11,12 +11,13 @@ namespace CellarHQ
             InventoryList myInventoryList = new InventoryList();
 
             int lastWineID = 1000;
+            int WineID = lastWineID; // In upcoming phase: lastWineID will be a lookup
 
             bool addAnotherWine = true;
 
             while (addAnotherWine)
             {
-                lastWineID += 1;
+                WineID += 1;
                 newWineProfile = newWineProfile.BuildWineProfile(lastWineID);
                 myInventoryList.inventoryList.Add(newWineProfile);
                 WineProfile.ConfirmNewProfileAdded(newWineProfile);

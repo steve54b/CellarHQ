@@ -12,6 +12,7 @@ namespace CellarHQ
         public const string CONTAINER_VOL_UNITS = "ml";
 
         private int wineID;
+        private string wineType;
         private string vintage;
         private string producer;
         private string country;
@@ -24,8 +25,7 @@ namespace CellarHQ
         private int varietal2Pct;
         private string varietal3;
         private int varietal3Pct;
-        private string wineType;
-        private string stillOrSparkling;
+        private string stillSparkFriz;
         private string color;
         private string dryness;
         private string containerType;
@@ -36,6 +36,7 @@ namespace CellarHQ
         //private string comments;
 
         public int    WineID { get; }
+        public string WineType { get; set; } //array validation
         public string Vintage { get; set; }  // code to validate 4-digit year
         public string Producer { get; set; } // table validation
         public string Country { get; set; }  // table validation
@@ -48,8 +49,7 @@ namespace CellarHQ
         public int    Varietal2Pct { get; set; }
         public string Varietal3 { get; set; }
         public int    Varietal3Pct { get; set; }
-        public string WineType { get; set; } //array validation
-        public string StillOrSparkling { get; set; } // array validation
+        public string StillSparkFriz { get; set; } // array validation
         public string Color { get; set; } // array validation
         public string Dryness { get; set; } // array validation
         public string ContainerType { get; set; } // array validation
@@ -65,9 +65,7 @@ namespace CellarHQ
             string region, string appellation, string label, string varietal1,
             int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
             int varietal3Pct, string wineType, string stillOrSparkling, string color,
-            string dryness, string containerType="bottle", int containerVolumeAmount=750,
-            string containerVolUnits="ml")
-
+            string dryness, int currentBottleCount)
         {
             WineID = wineID;
             Vintage = vintage;
@@ -83,22 +81,33 @@ namespace CellarHQ
             Varietal3 = varietal3;
             Varietal3Pct = varietal3Pct;
             WineType = wineType;
-            StillOrSparkling = stillOrSparkling;
+            StillSparkFriz = stillSparkFriz;
             Color = color;
             Dryness = dryness;
-            ContainerType = containerType;
-            ContainerVolumeAmount = containerVolumeAmount;
-            ContainerVolUnits = containerVolUnits;
+            CurrentBottleCount = currentBottleCount;
+            ContainerType = CONTAINER_TYPE;
+            ContainerVolumeAmount = CONTAINER_VOLUME;
+            ContainerVolUnits = CONTAINER_VOL_UNITS;
         }
 
         public WineProfile BuildWineProfile(int lastWineID)
         {
             int intResponse;
             int intVintage = 0;
+            string[] wineTypeArray = new string[] { "Table", "Sparkling", "Dessert", "Port", "Other" };
+            string[] ssfArray = new string[] { "Still", "Sparkling", "Frizzante" };
+            string[] colorArray = new string[] { "Red", "White", "Rose" };
+            string[] drynessArray = new string[] { "Dry", "Off-dry", "Sweet", "Other" };
 
             UserInterface.DisplayMessage("Creating new wine profile:");
 
             wineID = lastWineID;
+
+            // EXCEPTION HANDLING WILL BE ADDED TO REPROMPT IF ENTRY OUT OF RANGE
+            UserInterface.DisplayPrompt("Table=1, Sparkling=2, Dessert=3, Port=4, Other=5: ");
+            intResponse = UserInterface.GetInteger();
+            wineType = wineTypeArray[intResponse-1];
+
             UserInterface.DisplayPrompt("Is this a non-vintage wine? (Y/N) ");
             string stringResponse = UserInterface.GetString();
             if (stringResponse.ToUpper() == "Y")
@@ -116,12 +125,12 @@ namespace CellarHQ
                 }
                 vintage = intVintage.ToString();
             }
-
-            UserInterface.DisplayPrompt("Country of Origin? ");
-            country = UserInterface.GetString();
-
+            
             UserInterface.DisplayPrompt("Producer Name? ");
             producer = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Label? ");
+            label = UserInterface.GetString();
 
             UserInterface.DisplayPrompt("Country of origin? ");
             country = UserInterface.GetString();
@@ -132,48 +141,90 @@ namespace CellarHQ
             UserInterface.DisplayPrompt("Appellation? ");
             appellation = UserInterface.GetString();
 
+            //
+            // NEXT PHASE:
+            //  varietals & percentages will be stored in the
+            //          "VarietalPercentage" table
+            //
             UserInterface.DisplayPrompt("Varietal #1 name? ");
-            varietal1 = UserInterface.GetString();
-
-            UserInterface.DisplayPrompt("Varietal #1 percent? ");
+                varietal1 = UserInterface.GetString();
+                UserInterface.DisplayPrompt("Varietal #1 percent? ");
             varietal1Pct = UserInterface.GetInteger();
+            if (varietal1 != "")
+            {
+                UserInterface.DisplayPrompt("Varietal #2 name? ");
+                varietal2 = UserInterface.GetString();
+                UserInterface.DisplayPrompt("Varietal #2 percent? ");
+                varietal2Pct = UserInterface.GetInteger();
+                if (varietal2 != "")
+                {
+                    UserInterface.DisplayPrompt("Varietal #3 name? ");
+                    try
+                    {
+                        varietal3 = UserInterface.GetString();
+                        UserInterface.DisplayPrompt("Varietal #3 percent? ");
+                        varietal3Pct = UserInterface.GetInteger();
+                    }
+                    catch
+                    {
+                        varietal3 = "";
+                        varietal3Pct = 0;
+                    }
+                }
+            }
 
-            UserInterface.DisplayPrompt("Varietal #2 name? ");
-            varietal2 = UserInterface.GetString();
-
-            UserInterface.DisplayPrompt("Varietal #2 percent? ");
-            varietal2Pct = UserInterface.GetInteger();
-
-            UserInterface.DisplayPrompt("Varietal #3 name? ");
-            varietal3 = UserInterface.GetString();
-
-            UserInterface.DisplayPrompt("Varietal #3 percent? ");
-            varietal3Pct = UserInterface.GetInteger();
-
-            UserInterface.DisplayPrompt("Wine Label? ");
-            label = UserInterface.GetString();
-
-            UserInterface.DisplayPrompt("Color? ");
+            // FOR stillSparkFriz, color, and dryness,
+            // EXCEPTION HANDLING TO REPROMPT IF ENTRY OUT OF RANGE
+            UserInterface.DisplayPrompt("Still Wine=1, Sparkling=2, Frizzante=3: ");
             intResponse = UserInterface.GetInteger();
+            try
+            {
+                stillSparkFriz = ssfArray[intResponse - 1];
+            }
+            catch
+            {
+                stillSparkFriz = "";
+            }
 
-            UserInterface.DisplayPrompt("Wine dryness? " +
-                "(0 = Dry, 1 = Off-dry, 2 = Sweet, 3 = Other) ");
+            UserInterface.DisplayPrompt("Red=1, White=2, Rose=3: ");
             intResponse = UserInterface.GetInteger();
+            try
+            {
+                color = colorArray[intResponse - 1];
+            }
+            catch
+            {
+                color = "";
+            }
+
+            UserInterface.DisplayPrompt("Dry=1, Off-dry=2, Sweet=3, Other=4: ");
+            intResponse = UserInterface.GetInteger();
+            try
+            {
+                dryness = drynessArray[intResponse - 1];
+            }
+            catch
+            {
+                dryness = "";
+            }
+
+            UserInterface.DisplayPrompt("How may bottles? ");
+            currentBottleCount = UserInterface.GetInteger();
             
             WineProfile thisWine = new WineProfile(wineID, vintage, producer, country,
                 region, appellation, label, varietal1, varietal1Pct, varietal2, varietal2Pct,
-                varietal3, varietal3Pct, wineType, stillOrSparkling, color, dryness);
+                varietal3, varietal3Pct, wineType, stillSparkFriz, color, dryness, currentBottleCount);
 
             return thisWine;
         }
 
         public static void ConfirmNewProfileAdded(WineProfile thisWine)
         {
-            UserInterface.DisplayMessage($"\nTHE FOLLOWING WINE PROFILE HAS BEEN ADDED TO YOUR CELLAR:" +
-                $"\n{thisWine.ToString()}\n");
+            UserInterface.DisplayMessage($"\nWINE PROFILE:\n============\n" +
+                "{thisWine.ToString()}\n WAS JUST ADDED TO YOUR CELLAR");
         }
 
-        // NOT YET INTEGRATED INTO MAIN PROGRAM
+        // NOT YET INTEGRATED INTO APPLICATION
         public void AddOrRemoveBottles(int wineID)
         {
             string addOrRemove = "";
@@ -208,7 +259,8 @@ namespace CellarHQ
 
         public static void ListCellarContents(List<WineProfile> inventoryList)
         {
-            string header = "CURRENT INVENTORY:\n";
+            string header = "\nCURRENT INVENTORY:\n==================" +
+                $"(You have {inventoryList.Count} wines in your cellar)";
             UserInterface.DisplayMessage(header);
             foreach (WineProfile thisWine in inventoryList)
             {
@@ -218,27 +270,23 @@ namespace CellarHQ
             }
         }
 
-        /*
-            public WineProfile(int wineID, string vintage, string producer, string country,
-            string region, string appellation, string label, string varietal1,
-            int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
-            int varietal3Pct, string wineType, string stillOrSparkling, string color,
-            string dryness, string containerType, int containerVolumeAmount,
-            string containerVolUnits)
-            */
-
         public override string ToString()
         {
-            string profileString = $"Wine ID#: {WineID}\nVintage:  {Vintage}\n" +
-                $"Country:  {Country}\nAppellation:  {Appellation}\nProducer:  " +
-                $"{Producer}\nLabel:  {Label}\nStill or Sparkling/Frizzante  {StillOrSparkling}\n" +
+            string profileString = $"Wine ID#: {WineID}\n" +
+                $"Wine Type: {WineType}\nVintage:  {Vintage}\n" +
+                $"Producer: {Producer}\nCountry:  {Country}\nRegion: {Region}, " +
+                $"Appellation: {Appellation}\nLabel: {Label}\n" +
+                $"Varietal #1: {Varietal1}, {Varietal1Pct}%\n" +
+                $"Varietal #2: {Varietal2}, {Varietal2Pct}%\n" +
+                $"Varietal #3: {Varietal3}, {Varietal3Pct}%\n" +
+                $"StillSparkling/Frizzante: {StillSparkFriz}\n" +
                 $"Color: { Color}\nDryness:  { Dryness}\nContainer Type:  {ContainerType}\n" +
-                $"Current Bottle Count:  {CurrentBottleCount}";
+                $"Current Bottle Count: {CurrentBottleCount}";
 
             return profileString;
         }
 
-        // NOT YET INTEGRATED INTO MAIN PROGRAM
+        // NOT YET INTEGRATED INTO APPLICATION
         public static void LogTransaction(int wineID, string addOrRemove, int numberOfBottles)
         {
             string transaction = $"{wineID},{DateTime.Now},{addOrRemove},{numberOfBottles}";

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CellarHQ
 {
-    class LastID
+    class LastIDs
     {
         private int lastWineID;
         private int lastProducerID;

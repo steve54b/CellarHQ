@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CellarHQ
 {
-    class WineVarietalPercent
+    class VarietalPercentage
     {
         private int wineID;
         private int varietalID;
@@ -14,7 +14,7 @@ namespace CellarHQ
         public int VarietalID { get; set; }
         public int VarietalPercent { get; set; }
 
-        public WineVarietalPercent(int WineID, int varietalID, int varietalPercent)
+        public VarietalPercentage(int WineID, int varietalID, int varietalPercent)
         {
             WineID = wineID;
             VarietalID = varietalID;
