@@ -142,34 +142,53 @@ namespace CellarHQ
             appellation = UserInterface.GetString();
 
             //
-            // NEXT PHASE:
-            //  varietals & percentages will be stored in the
-            //          "VarietalPercentage" table
+            // NEXT PHASE: won't need this kloo-gee stuff for
+            //  varietals & percentages - they will be stored in the
+            //  "VarietalPercentage" table
             //
             UserInterface.DisplayPrompt("Varietal #1 name? ");
                 varietal1 = UserInterface.GetString();
-                UserInterface.DisplayPrompt("Varietal #1 percent? ");
-            varietal1Pct = UserInterface.GetInteger();
             if (varietal1 != "")
             {
+                UserInterface.DisplayPrompt("Varietal #1 percent? ");
+                try
+                {
+                    varietal1Pct = UserInterface.GetInteger();
+                }
+                catch
+                {
+                    varietal1Pct = 0;
+                }
                 UserInterface.DisplayPrompt("Varietal #2 name? ");
                 varietal2 = UserInterface.GetString();
-                UserInterface.DisplayPrompt("Varietal #2 percent? ");
-                varietal2Pct = UserInterface.GetInteger();
                 if (varietal2 != "")
                 {
-                    UserInterface.DisplayPrompt("Varietal #3 name? ");
+                    UserInterface.DisplayPrompt("Varietal #2 percent? ");
                     try
                     {
-                        varietal3 = UserInterface.GetString();
-                        UserInterface.DisplayPrompt("Varietal #3 percent? ");
-                        varietal3Pct = UserInterface.GetInteger();
+                        varietal2Pct = UserInterface.GetInteger();
                     }
                     catch
                     {
-                        varietal3 = "";
-                        varietal3Pct = 0;
+                        varietal2Pct = 0;
                     }
+                    UserInterface.DisplayPrompt("Varietal #3 name? ");
+                    varietal3 = UserInterface.GetString();
+                    if (varietal3 != "")
+                    { 
+                        UserInterface.DisplayPrompt("Varietal #3 percent? ");
+                        try
+                        {
+                            varietal3Pct = UserInterface.GetInteger();
+                        }
+                        catch
+                        {
+                            varietal3 = "";
+                            varietal3Pct = 0;
+                        }
+                    
+                    }
+                    
                 }
             }
 
@@ -221,7 +240,7 @@ namespace CellarHQ
         public static void ConfirmNewProfileAdded(WineProfile thisWine)
         {
             UserInterface.DisplayMessage($"\nWINE PROFILE:\n============\n" +
-                "{thisWine.ToString()}\n WAS JUST ADDED TO YOUR CELLAR");
+                "{thisWine.ToString()}\n WAS JUST ADDED TO YOUR CELLAR\n");
         }
 
         // NOT YET INTEGRATED INTO APPLICATION
