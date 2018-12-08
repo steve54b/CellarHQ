@@ -31,6 +31,7 @@ namespace CellarHQ
         private string containerType;
         private int containerVolume;
         private string containerVolUnits;
+        private int currentBottleCount;
         //private string producerLocation;
         //private string comments;
 
@@ -52,8 +53,9 @@ namespace CellarHQ
         public string Color { get; set; } // array validation
         public string Dryness { get; set; } // array validation
         public string ContainerType { get; set; } // array validation
-        public int ContainerVolumeAmount { get; set; } // code to validate "reasonable" number
+        public int    ContainerVolumeAmount { get; set; } // code to validate "reasonable" number
         public string ContainerVolUnits { get; set; } // array validation
+        public int    CurrentBottleCount;  
         //public string ProducerLocation
         //public string Comments { get; set; }
 
@@ -63,8 +65,9 @@ namespace CellarHQ
             string region, string appellation, string label, string varietal1,
             int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
             int varietal3Pct, string wineType, string stillOrSparkling, string color,
-            string dryness, string containerType, int containerVolumeAmount,
-            string containerVolUnits)
+            string dryness, string containerType="bottle", int containerVolumeAmount=750,
+            string containerVolUnits="ml")
+
         {
             WineID = wineID;
             Vintage = vintage;
@@ -83,9 +86,9 @@ namespace CellarHQ
             StillOrSparkling = stillOrSparkling;
             Color = color;
             Dryness = dryness;
-            ContainerType = CONTAINER_TYPE;
-            ContainerVolumeAmount = CONTAINER_VOLUME;
-            ContainerVolUnits = CONTAINER_VOL_UNITS;
+            ContainerType = containerType;
+            ContainerVolumeAmount = containerVolumeAmount;
+            ContainerVolUnits = containerVolUnits;
         }
 
         public WineProfile BuildWineProfile(int lastWineID)
@@ -156,9 +159,10 @@ namespace CellarHQ
             UserInterface.DisplayPrompt("Wine dryness? " +
                 "(0 = Dry, 1 = Off-dry, 2 = Sweet, 3 = Other) ");
             intResponse = UserInterface.GetInteger();
-
-            WineProfile thisWine = new WineProfile(wineID, vintage, country, appellation,
-                 producer, label, color, dryness, comments);
+            
+            WineProfile thisWine = new WineProfile(wineID, vintage, producer, country,
+                region, appellation, label, varietal1, varietal1Pct, varietal2, varietal2Pct,
+                varietal3, varietal3Pct, wineType, stillOrSparkling, color, dryness);
 
             return thisWine;
         }
@@ -214,6 +218,15 @@ namespace CellarHQ
             }
         }
 
+        /*
+            public WineProfile(int wineID, string vintage, string producer, string country,
+            string region, string appellation, string label, string varietal1,
+            int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
+            int varietal3Pct, string wineType, string stillOrSparkling, string color,
+            string dryness, string containerType, int containerVolumeAmount,
+            string containerVolUnits)
+            */
+
         public override string ToString()
         {
             string profileString = $"Wine ID#: {WineID}\nVintage:  {Vintage}\n" +
@@ -228,7 +241,7 @@ namespace CellarHQ
         // NOT YET INTEGRATED INTO MAIN PROGRAM
         public static void LogTransaction(int wineID, string addOrRemove, int numberOfBottles)
         {
-            string transaction = $"{wineID},{DateTime.Now},{addOrRemove}, {numberOfBottles}";
+            string transaction = $"{wineID},{DateTime.Now},{addOrRemove},{numberOfBottles}";
         }
     }
 }

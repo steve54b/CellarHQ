@@ -7,7 +7,7 @@ namespace CellarHQ
     class WineType
     {
         private string typeName;
-        public string TypeName;
+        public string TypeName { get; set; }
 
         public WineType(string typeName)
         {
