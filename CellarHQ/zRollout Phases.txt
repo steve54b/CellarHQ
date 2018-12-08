@@ -1,0 +1,15 @@
+﻿ROLLOUT PHASES
+
+Phase 1- MVP: 
+- create wine profile
+- validate vintage, varietal composition, color, dryness, and wine type
+- list all wines in database
+
+Phase 2:
+- validate/allow addition of producer & producer location
+- validate/allow addition of country & appellation
+- validate/allow addition of merchant & merchant location
+- add & remove wines
+- track transactions
+
+Phase 3:

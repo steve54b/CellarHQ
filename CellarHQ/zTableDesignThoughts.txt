@@ -1,0 +1,7 @@
+﻿add id # to:
+country - use in appellation
+producer - use in producer location
+varietal - use in wine varietal & percent
+
+fields:
+container size type, e.g. Magnum, Jeraboam, Methusalam, etc.
