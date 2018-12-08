@@ -18,7 +18,7 @@ namespace CellarHQ
             while (addAnotherWine)
             {
                 WineID += 1;
-                newWineProfile = newWineProfile.BuildWineProfile(lastWineID);
+                newWineProfile = newWineProfile.BuildWineProfile(WineID);
                 myInventoryList.inventoryList.Add(newWineProfile);
                 WineProfile.ConfirmNewProfileAdded(newWineProfile);
 
