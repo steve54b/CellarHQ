@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/CellarHQ/TextFile1.txt
+/CellarHQ/zTextFile1.txt

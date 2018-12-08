@@ -7,66 +7,91 @@ namespace CellarHQ
     class WineProfile
     {
         // FOR THIS PHASE, hard-coded to 750 ml bottle
-        public const int VOLUME_AMT = 750;
-        public const string VOLUME_UNITS = "ml";
         public const string CONTAINER_TYPE = "bottle";
+        public const int CONTAINER_VOLUME = 750;
+        public const string CONTAINER_VOL_UNITS = "ml";
 
         private int wineID;
         private string vintage;
-        private string country;
-        private string appellation;
         private string producer;
+        private string country;
+        private string region;
+        private string appellation;
         private string label;
-        private string color;
+        private string varietal1;
+        private int varietal1Pct;
+        private string varietal2;
+        private int varietal2Pct;
+        private string varietal3;
+        private int varietal3Pct;
         private string wineType;
-        private string stillSparklingFrizzante;
+        private string stillOrSparkling;
+        private string color;
         private string dryness;
-        private string comments;
-        private int currentBottleCount = 0;
+        private string containerType;
+        private int containerVolume;
+        private string containerVolUnits;
+        //private string producerLocation;
+        //private string comments;
 
-        public int WineID { get; }
+        public int    WineID { get; }
         public string Vintage { get; set; }  // code to validate 4-digit year
-        public string Country { get; set; }  // table validation
-        public string Appellation { get; set; } // table validation
         public string Producer { get; set; } // table validation
-        public string ProducerLocation { get; set; } // table validation
+        public string Country { get; set; }  // table validation
+        public string Region { get; set; }   // table validation
+        public string Appellation { get; set; } // table validation
         public string Label { get; set; } // free-form
+        public string Varietal1 { get; set; }
+        public int    Varietal1Pct { get; set; }
+        public string Varietal2 { get; set; }
+        public int    Varietal2Pct { get; set; }
+        public string Varietal3 { get; set; }
+        public int    Varietal3Pct { get; set; }
         public string WineType { get; set; } //array validation
+        public string StillOrSparkling { get; set; } // array validation
         public string Color { get; set; } // array validation
-        public string StillSparklingFrizzante { get; set; } // array validation
         public string Dryness { get; set; } // array validation
-        public string Comments { get; set; }
         public string ContainerType { get; set; } // array validation
         public int ContainerVolumeAmount { get; set; } // code to validate "reasonable" number
-        public string ContainerVolumeUnits { get; set; } // array validation
-        public int CurrentBottleCount { get; set; }
+        public string ContainerVolUnits { get; set; } // array validation
+        //public string ProducerLocation
+        //public string Comments { get; set; }
 
         public WineProfile() { }
 
-        public WineProfile(int wineID, string vintage, string country,
-            string appellation, string producer, string label,
-            string color, string dryness, string stillSparklingFirzzante,
-            string comments, int currentBottleCount = 0)
+        public WineProfile(int wineID, string vintage, string producer, string country,
+            string region, string appellation, string label, string varietal1,
+            int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
+            int varietal3Pct, string wineType, string stillOrSparkling, string color,
+            string dryness, string containerType, int containerVolumeAmount,
+            string containerVolUnits)
         {
             WineID = wineID;
-            ContainerVolumeAmount = VOLUME_AMT;
-            ContainerVolumeUnits = VOLUME_UNITS;
             Vintage = vintage;
-            Country = country;
-            Appellation = appellation;
             Producer = producer;
+            Country = country;
+            Region = region;
+            Appellation = appellation;
             Label = label;
+            Varietal1 = varietal1;
+            Varietal1Pct = varietal1Pct;
+            Varietal2 = varietal2;
+            Varietal2Pct = varietal2Pct;
+            Varietal3 = varietal3;
+            Varietal3Pct = varietal3Pct;
+            WineType = wineType;
+            StillOrSparkling = stillOrSparkling;
             Color = color;
             Dryness = dryness;
-            Comments = comments;
             ContainerType = CONTAINER_TYPE;
-            CurrentBottleCount = currentBottleCount;
+            ContainerVolumeAmount = CONTAINER_VOLUME;
+            ContainerVolUnits = CONTAINER_VOL_UNITS;
         }
 
         public WineProfile BuildWineProfile(int lastWineID)
         {
             int intResponse;
-            int intVintage;
+            int intVintage = 0;
 
             UserInterface.DisplayMessage("Creating new wine profile:");
 
@@ -78,18 +103,49 @@ namespace CellarHQ
             else
             {
                 UserInterface.DisplayPrompt("Vintage? ");
-                intVintage = UserInterface.GetInteger();
+                try
+                {
+                    intVintage = UserInterface.GetInteger();
+                }
+                catch
+                {
+
+                }
                 vintage = intVintage.ToString();
             }
 
             UserInterface.DisplayPrompt("Country of Origin? ");
             country = UserInterface.GetString();
 
-            UserInterface.DisplayPrompt("Region of Origin? ");
-            appellation = UserInterface.GetString();
-
             UserInterface.DisplayPrompt("Producer Name? ");
             producer = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Country of origin? ");
+            country = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Region of Origin? ");
+            region = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Appellation? ");
+            appellation = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Varietal #1 name? ");
+            varietal1 = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Varietal #1 percent? ");
+            varietal1Pct = UserInterface.GetInteger();
+
+            UserInterface.DisplayPrompt("Varietal #2 name? ");
+            varietal2 = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Varietal #2 percent? ");
+            varietal2Pct = UserInterface.GetInteger();
+
+            UserInterface.DisplayPrompt("Varietal #3 name? ");
+            varietal3 = UserInterface.GetString();
+
+            UserInterface.DisplayPrompt("Varietal #3 percent? ");
+            varietal3Pct = UserInterface.GetInteger();
 
             UserInterface.DisplayPrompt("Wine Label? ");
             label = UserInterface.GetString();
