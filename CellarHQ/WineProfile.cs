@@ -19,12 +19,12 @@ namespace CellarHQ
         private string region;
         private string appellation;
         private string label;
-        private string varietal1;
-        private int varietal1Pct;
-        private string varietal2;
-        private int varietal2Pct;
-        private string varietal3;
-        private int varietal3Pct;
+        private string grape1;
+        private int grape1Pct;
+        private string grape2;
+        private int grape2Pct;
+        private string grape3;
+        private int grape3Pct;
         private string stillSparkFriz;
         private string color;
         private string dryness;
@@ -43,12 +43,12 @@ namespace CellarHQ
         public string Region { get; set; }   // table validation
         public string Appellation { get; set; } // table validation
         public string Label { get; set; } // free-form
-        public string Varietal1 { get; set; }
-        public int    Varietal1Pct { get; set; }
-        public string Varietal2 { get; set; }
-        public int    Varietal2Pct { get; set; }
-        public string Varietal3 { get; set; }
-        public int    Varietal3Pct { get; set; }
+        public string Grape1 { get; set; }
+        public int    Grape1Pct { get; set; }
+        public string Grape2 { get; set; }
+        public int    Grape2Pct { get; set; }
+        public string Grape3 { get; set; }
+        public int    Grape3Pct { get; set; }
         public string StillSparkFriz { get; set; } // array validation
         public string Color { get; set; } // array validation
         public string Dryness { get; set; } // array validation
@@ -62,9 +62,9 @@ namespace CellarHQ
         public WineProfile() { }
 
         public WineProfile(int wineID, string vintage, string producer, string country,
-            string region, string appellation, string label, string varietal1,
-            int varietal1Pct, string varietal2, int varietal2Pct, string varietal3,
-            int varietal3Pct, string wineType, string stillOrSparkling, string color,
+            string region, string appellation, string label, string grape1,
+            int grape1Pct, string grape2, int grape2Pct, string grape3,
+            int grape3Pct, string wineType, string stillOrSparkling, string color,
             string dryness, int currentBottleCount)
         {
             WineID = wineID;
@@ -74,12 +74,12 @@ namespace CellarHQ
             Region = region;
             Appellation = appellation;
             Label = label;
-            Varietal1 = varietal1;
-            Varietal1Pct = varietal1Pct;
-            Varietal2 = varietal2;
-            Varietal2Pct = varietal2Pct;
-            Varietal3 = varietal3;
-            Varietal3Pct = varietal3Pct;
+            Grape1 = grape1;
+            Grape1Pct = grape1Pct;
+            Grape2 = grape2;
+            Grape2Pct = grape2Pct;
+            Grape3 = grape3;
+            Grape3Pct = grape3Pct;
             WineType = wineType;
             StillSparkFriz = stillSparkFriz;
             Color = color;
@@ -99,6 +99,7 @@ namespace CellarHQ
             string[] ssfArray = new string[] { "Still", "Sparkling", "Frizzante" };
             string[] colorArray = new string[] { "Red", "White", "Rose" };
             string[] drynessArray = new string[] { "Dry", "Off-dry", "Sweet", "Other" };
+            string[] containerTypeArray = new string[] { "bottle", "can", "box" };
 
             UserInterface.DisplayMessage("Creating new wine profile:");
 
@@ -152,53 +153,53 @@ namespace CellarHQ
 
             //
             // NEXT PHASE: won't need this kloo-gee stuff for
-            //  varietals & percentages - they will be stored in the
-            //  "VarietalPercentage" table
+            //  grapes & percentages - they will be stored in the
+            //  "GrapePercentage" table
             //
-            UserInterface.DisplayPrompt("Varietal #1 name? ");
-                varietal1 = UserInterface.GetString();
-            if (varietal1 != "")
+            UserInterface.DisplayPrompt("Grape #1 name? ");
+                grape1 = UserInterface.GetString();
+            if (grape1 != "")
             {
                 try
                 {
-                    UserInterface.DisplayPrompt("Varietal #1 percent? ");
-                    varietal1Pct = UserInterface.GetInteger();
+                    UserInterface.DisplayPrompt("Grape #1 percent? ");
+                    grape1Pct = UserInterface.GetInteger();
                 }
                 catch
                 {
-                    varietal1Pct = 0;
+                    grape1Pct = 0;
                 }
-                UserInterface.DisplayMessage($"{varietal1}, {varietal1Pct}%");
+                UserInterface.DisplayMessage($"{grape1}, {grape1Pct}%");
 
-                UserInterface.DisplayPrompt("Varietal #2 name? ");
-                varietal2 = UserInterface.GetString();
-                if (varietal2 != "")
+                UserInterface.DisplayPrompt("Grape #2 name? ");
+                grape2 = UserInterface.GetString();
+                if (grape2 != "")
                 {
                     try
                     {
-                        UserInterface.DisplayPrompt("Varietal #2 percent? ");
-                        varietal2Pct = UserInterface.GetInteger();
+                        UserInterface.DisplayPrompt("Grape #2 percent? ");
+                        grape2Pct = UserInterface.GetInteger();
                     }
                     catch
                     {
-                        varietal2Pct = 0;
+                        grape2Pct = 0;
                     }
-                    UserInterface.DisplayMessage($"{varietal2}, {varietal2Pct}%");
+                    UserInterface.DisplayMessage($"{grape2}, {grape2Pct}%");
 
-                    UserInterface.DisplayPrompt("Varietal #3 name? ");
-                    varietal3 = UserInterface.GetString();
-                    if (varietal3 != "")
+                    UserInterface.DisplayPrompt("Grape #3 name? ");
+                    grape3 = UserInterface.GetString();
+                    if (grape3 != "")
                     {
                         try
                         {
-                            UserInterface.DisplayPrompt("Varietal #3 percent? ");
-                            varietal3Pct = UserInterface.GetInteger();
+                            UserInterface.DisplayPrompt("Grape #3 percent? ");
+                            grape3Pct = UserInterface.GetInteger();
                         }
                         catch
                         {
-                            varietal3Pct = 0;
+                            grape3Pct = 0;
                         }
-                        UserInterface.DisplayMessage($"{varietal3}, {varietal3Pct}%");
+                        UserInterface.DisplayMessage($"{grape3}, {grape3Pct}%");
                     }
                 }
             }
@@ -245,8 +246,8 @@ namespace CellarHQ
             currentBottleCount = UserInterface.GetInteger();
             
             WineProfile thisWine = new WineProfile(wineID, vintage, producer, country,
-                region, appellation, label, varietal1, varietal1Pct, varietal2, varietal2Pct,
-                varietal3, varietal3Pct, wineType, stillSparkFriz, color, dryness, currentBottleCount);
+                region, appellation, label, grape1, grape1Pct, grape2, grape2Pct,
+                grape3, grape3Pct, wineType, stillSparkFriz, color, dryness, currentBottleCount);
 
             return thisWine;
         }
@@ -310,9 +311,9 @@ namespace CellarHQ
                 $"Wine Type: {WineType}\nVintage:  {Vintage}\n" +
                 $"Producer: {Producer}\nCountry:  {Country}\nRegion: {Region}\n" +
                 $"Appellation: {Appellation}\nLabel: {Label}\n" +
-                $"Varietal #1: {Varietal1}, {Varietal1Pct}%\n" +
-                $"Varietal #2: {Varietal2}, {Varietal2Pct}%\n" +
-                $"Varietal #3: {Varietal3}, {Varietal3Pct}%\n" +
+                $"Grape #1: {Grape1}, {Grape1Pct}%\n" +
+                $"Grape #2: {Grape2}, {Grape2Pct}%\n" +
+                $"Grape #3: {Grape3}, {Grape3Pct}%\n" +
                 $"StillSparkling/Frizzante: {StillSparkFriz}\n" +
                 $"Color: {Color}\nDryness:  {Dryness}\nContainer: {ContainerVolumeAmount}" +
                 $"{ContainerVolUnits} {ContainerType}\n" +

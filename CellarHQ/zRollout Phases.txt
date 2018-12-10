@@ -1,11 +1,30 @@
-﻿ROLLOUT PHASES
+﻿ROLLOUT PHASES (revised 20181209 06:15 EST)
+==============
 
-Phase 1- MVP: 
-- create wine profile
-- validate vintage, varietal composition, color, dryness, and wine type
-- list all wines in database
+Functionality will be developed first as console-based.  Web interface will be added later.
 
-Phase 2:
+Phase 1- Just enter & store wine profiles: COMPLETED FRIDAY 12/7/2018
+0- console application
+1- wine profiles only last until user exits application - no database storage
+2- create wine profile, but no edit capability
+3- validate vintage for 4 valid digits (possibly additional sophistication in later phase),
+3b- array-based sets of valid values for uniformity in composition, color, dryness, and wine type columns
+4- exception handling to assign default value - no reprompting
+5- show details after entry of each wine profile
+6- at end of user session, summary list of all wines entered during that session
+
+Phase 2: (DEVELOP IN NEW GIT BRANCH)
+- console application
+- save wine profiles in WineProfiles table
+- Use LastWineID column of LastIDs table for assignment of WineIDs
+- Save wine varietal composition data in VarietalsPercent table (related to WineProfiles table through WineID - many-to-one)
+- Validate types of grapes entered in profiles via Varietals table.  No user addition of grape types to Varietals table
+- Validate country (only) of origin using Countries table (region/state/province, appellation in later phase).  No user addition 
+    of country names to Countries table
+
+Phase 3:
+1- allow addition and removal of wines
+2- track current inventory
 - validate/allow addition of producer & producer location
 - validate/allow addition of country & appellation
 - validate/allow addition of merchant & merchant location
