@@ -10,6 +10,7 @@
     <Compile Remove="Dryness.cs" />
     <Compile Remove="HighestCount.cs" />
     <Compile Remove="LowestCount.cs" />
+    <Compile Remove="Subregion.cs" />
     <Compile Remove="VolumeUnits.cs" />
   </ItemGroup>
 
