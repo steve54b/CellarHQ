@@ -1,0 +1,48 @@
+Creating new wine profile:
+Table=1, Sparkling=2, Dessert=3, Port=4, Other=5: 5
+Is this a non-vintage wine? (Y/N) Y
+Producer Name? joe
+Label? schmoe
+Country of origin? jewish crow
+Region of Origin? wokich
+Appellation? aberlour
+Varietal #1 name? pinot chutzpah
+Varietal #1 percent? 5
+Varietal #2 name? petit boychik
+Varietal #2 percent? 72
+Varietal #3 name? gamay chupah
+Varietal #3 percent? 23
+Still Wine=1, Sparkling=2, Frizzante=3: 1
+Red=1, White=2, Rose=3: 3
+Dry=1, Off-dry=2, Sweet=3, Other=4: 1
+How may bottles? 5
+
+WINE PROFILE:
+============
+Wine ID#: 1000
+Wine Type: Other
+Vintage:  NV
+Producer: joe
+Country:  jewish crow
+Region: wokich, Appellation: aberlour
+Label: schmoe
+Varietal #1: pinot chutzpah, 5%
+Varietal #2: petit boychik, 72%
+Varietal #3: gamay chupah, 23%
+StillSparkling/Frizzante:
+Color: Rose
+Dryness:  Dry
+Container Type:  bottle
+Current Bottle Count: 5
+ WAS JUST ADDED TO YOUR CELLAR
+
+Add another wine? (Y/N) n
+
+END OF NEW WINE ENTRY
+
+
+CURRENT INVENTORY:
+==================(You have 1 wines in your cellar)
+Wine ID: 1000  Vintage: NV  Producer: joe  Label: schmoe
+
+PRESS ANY KEY TO EXIT:

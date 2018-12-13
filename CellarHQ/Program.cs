@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace CellarHQ
 {
     class Program
     {
+        /*
+        connectionString="Data Source=ServerName;
+        Initial Catalog = DatabaseName; User ID = UserName; Password=Password"
+        (connection name is DESKTOP-N8M5CN6 (DESKTOP-N8M5CN6\steve)
+        */
+
         static void Main(string[] args)
         {
             WineProfile newWineProfile = new WineProfile();

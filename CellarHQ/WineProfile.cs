@@ -156,13 +156,13 @@ namespace CellarHQ
             //  grapes & percentages - they will be stored in the
             //  "GrapePercentage" table
             //
-            UserInterface.DisplayPrompt("Grape #1 name? ");
+            UserInterface.DisplayPrompt("Grape Type #1 name? ");
                 grape1 = UserInterface.GetString();
             if (grape1 != "")
             {
                 try
                 {
-                    UserInterface.DisplayPrompt("Grape #1 percent? ");
+                    UserInterface.DisplayPrompt("Grape Type #1 percent? ");
                     grape1Pct = UserInterface.GetInteger();
                 }
                 catch

@@ -6,16 +6,26 @@ namespace CellarHQ
 {
     class Appellation
     {
-        private Country countryName;
+        private int countryID;
+        private int appellationID;
         private string appellationName;
+        private int regionID;
+        private int subregionID;
 
-        public Country CountryName { get; set; }
+        public int CountryID { get; set; }
+        public int AppellationID { get; set; }
         public string AppellationName { get; set; }
+        private int RegionID { get; set; }
+        private int SubregionID { get; set; }
 
-        public Appellation(Country countryName, string appellationName)
+        public Appellation( int countryID, int appellationID, string appellationName,
+            int regionID, int subregionID)
         {
-            CountryName = countryName;
+            CountryID = countryID;
+            AppellationID = appellationID;
             AppellationName = appellationName;
+            RegionID = regionID;
+            SubregionID = subregionID;
         }
 
     }
