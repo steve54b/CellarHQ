@@ -12,5 +12,10 @@ namespace CellarHQ
         {
             List<WineProfile> inventoryList = new List<WineProfile>();
         }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

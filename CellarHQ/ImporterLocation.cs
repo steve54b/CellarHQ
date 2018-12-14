@@ -7,9 +7,13 @@ namespace CellarHQ
     class ImporterLocation
     {
         private int importerID;
-        private string location;
+        private int locationID;
+        private string locationCity;
+        private string locationState;
         public int ImporterID { get; set; }
-        public string Location { get; set; }
+        public int LocationID { get; set; }
+        public string LocationCity { get; set; }
+        public string LocationState { get; set; }
 
         public ImporterLocation(int importerID, string location)
         {
